@@ -1,0 +1,14 @@
+[Unit] 
+Description=SchoolFaq
+
+[Service] 
+WorkingDirectory=/opt/schoolfaq-dist
+ExecStart=/usr/bin/dotnet /opt/schoolfaq-dist/SchoolFaq.Core.dll
+Restart=always 
+RestartSec=10
+SyslogIdentifier=schoolfaq
+User=root 
+Environment=ASPNETCORE_ENVIRONMENT=Development 
+
+[Install] 
+WantedBy=multi-user.target
