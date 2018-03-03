@@ -32,13 +32,15 @@ import { FaqComponent } from './faq.component';
 import { AddquestionComponent } from './addquestion.component';
 import { CategoriesService } from '../services/categories-service';
 import { QuestionsService } from '../services/questions-service';
+import { AnswerquestionComponent } from './answerquestion.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     FaqComponent,
-    AddquestionComponent
+    AddquestionComponent,
+    AnswerquestionComponent
   ],
   imports: [
     BrowserModule,

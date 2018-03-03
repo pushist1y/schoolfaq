@@ -30,7 +30,7 @@ export class AddquestionComponent implements OnInit {
 
   onSubmit() {
     this.faqService.saveQuestion(this.question).subscribe((question) => {
-      this.router.navigateByUrl("/");
+      this.router.navigateByUrl("/faq");
     });
     //this.dataService.changeData(this.inputData);
     //this.router.navigateByUrl("/progress");

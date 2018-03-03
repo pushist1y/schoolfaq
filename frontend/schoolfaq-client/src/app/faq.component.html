@@ -1,7 +1,20 @@
 <div class="heading">
-  <h1>Задать вопрос</h1>
+  <h1>Список вопросов</h1>
 </div>
-
+<div style="height:30px;width:100%">
+  <div fxLayout="row">
+    <div fxFlex></div>
+    <div fxFlexAlign="right" fxFlex="20"  style="text-align: right;">
+      <span style="margin-right: 10px;">Сортировка: </span>
+    </div>
+    <div fxFlexAlign="right" fxFlex="20">
+      <mat-select placeholder="Сортировка" id="Order" name="Order" [(value)]="order" (change)="onOrderChange($event)">
+        <mat-option value="date">По дате</mat-option>
+        <mat-option value="rating">По рейтингу</mat-option>
+      </mat-select>
+    </div>
+  </div>
+</div>
 <div fxFlexFill fxLayout="row">
   <div fxFlex="70" fxFlexOffset="15" fxFlexAlign="center">
     <mat-card class="question-card" *ngFor="let question of questions">
@@ -9,40 +22,52 @@
 
         <mat-card-title>{{question.subject}}</mat-card-title>
         <mat-card-subtitle>
-            <div fxFlexFill fxLayout="row" class="fullWidth">
-              <div fxFlexAlign="left">
-                  <span>Категория: {{question.category.name}}</span>
-                  <br/>
-                  <span>Автор: {{question.questionerName}}</span>
-              </div>
-              <div fxFlex></div>
-              <div fxFlexAlign="right">
-                  <span>Отправлено: {{question.createdAt.format("DD.MM.YYYY HH:mm")}}</span>
-              </div>
+          <div fxFlexFill fxLayout="row" class="fullWidth">
+            <div fxFlexAlign="left">
+              <span>Категория: {{question.category.name}}</span>
+              <br/>
+              <span>Автор: {{question.questionerName}}</span>
             </div>
-          
+            <div fxFlex></div>
+            <div fxFlexAlign="right">
+              <span>Отправлено: {{question.createdAt.format("DD.MM.YYYY HH:mm")}}</span>
+            </div>
+          </div>
+
         </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         <p>
           {{question.text}}
         </p>
+        <app-answerquestion [question]="question" *ngIf="question.isEditing"></app-answerquestion>
+        <div class="fullWidth answerArea" *ngIf="!question.isEditing && question.answer">
+          <div class="answerName">Отвечает
+            <strong>{{question.answererName}}</strong>
+          </div>
+          <div class="answerText">{{question.answer}}</div>
+          <div class="answerDate">{{question.answerDate.format("DD.MM.YYYY HH:mm")}}</div>
+        </div>
       </mat-card-content>
       <mat-card-actions>
         <div fxFlexFill fxLayout="row">
           <div>
-            <button mat-button>
+            <button mat-button (click)="onUpvoteClick(question.id)">
               <mat-icon>favorite_border</mat-icon>
               <span>Нравится ({{question.likesCount}})</span>
             </button>
-            <button mat-button>
+            <button mat-button (click)="onDownvoteClick(question.id)">
               <mat-icon>sentiment_very_dissatisfied</mat-icon>
               <span>Не нравится ({{question.dislikesCount}})</span>
             </button>
           </div>
           <div fxFlex></div>
           <div fxFlexAlign="right">
-            <button mat-button>
+            <button mat-button (click)="onDeleteClick(question.id)">
+              <mat-icon>delete</mat-icon>
+              <span>Удалить</span>
+            </button>
+            <button mat-button *ngIf="!question.answer" (click)="onAnswerClick(question.id)">
               <mat-icon>reply</mat-icon>
               <span>Ответить</span>
             </button>

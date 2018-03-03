@@ -18,17 +18,44 @@ export class QuestionsService extends RemoteServiceBase {
         super(http);
     }
 
-    saveQuestion(question: Question): Observable<Question>{
+    saveQuestion(question: Question): Observable<Question> {
         return this.http.post<Question>(this.apiUrl, question, this.httpOptions);
     }
 
-    getAllQuestions(): Observable<Array<Question>>{
-        return this.http.get<Array<Question>>(this.apiUrl, this.httpOptions).map((questions) => {
-            for(let i=0;i<questions.length;i++){
+    getAllQuestions(order?: string): Observable<Array<Question>> {
+        let url = this.apiUrl;
+        if(order){
+            url += "?order=" + order;
+        }
+        return this.http.get<Array<Question>>(url, this.httpOptions).map((questions) => {
+            for (let i = 0; i < questions.length; i++) {
                 questions[i].createdAt = moment(questions[i].createdAt);
+                if (questions[i].answerDate) {
+                    questions[i].answerDate = moment(questions[i].answerDate);
+                }
+
             }
             return questions;
         });
     }
-    
+
+    answerQuestion(answeredQuestion: Question): Observable<Question> {
+        let url = this.apiUrl + "answer/" + answeredQuestion.id;
+        return this.http.post<Question>(url, answeredQuestion, this.httpOptions);
+    }
+
+    deleteQuestion(id: number): Observable<void> {
+        return this.http.delete<void>(this.apiUrl + id.toString());
+    }
+
+    upvote(questionId: number): Observable<number> {
+        let url = this.apiUrl + "upvote/" + questionId.toString();
+        return this.http.post<Question>(url, this.httpOptions).map((question) => question.likesCount);
+    }
+
+    downvote(questionId: number): Observable<number> {
+        let url = this.apiUrl + "downvote/" + questionId.toString();
+        return this.http.post<Question>(url, this.httpOptions).map((question) => question.dislikesCount);
+    }
+
 }

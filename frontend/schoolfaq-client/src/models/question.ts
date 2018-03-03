@@ -12,4 +12,8 @@ export class Question {
     dislikesCount: number;
     category: Category;
     createdAt: moment.Moment;
+    answererName: string;
+    answer: string;
+    answerDate: moment.Moment;
+    isEditing: boolean;
 }

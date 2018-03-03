@@ -17,5 +17,8 @@ namespace SchoolFaq.Core.Models
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }
         public DateTime? CreatedAt { get; set; }
+        public string Answer { get; set; }
+        public string AnswererName { get; set; }
+        public DateTime? AnswerDate { get; set; }
     }
 }

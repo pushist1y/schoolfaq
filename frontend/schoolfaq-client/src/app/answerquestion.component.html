@@ -1,0 +1,18 @@
+<form class="formWrapper" name="answerInputForm" #answerInputForm="ngForm" (ngSubmit)="onSubmitAnswer(question.id)">
+  <mat-form-field class="fullWidth">
+    <input id="nameInput" name="nameInput" [(ngModel)]="question.answererName" #answererName="ngModel" matInput placeholder="Имя"
+      required>
+    <mat-error *ngIf="answererName.hasError('required') && (answererName.dirty || answererName.touched || answerInputForm.submitted)">
+      Необходимо заполнить имя
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="fullWidth">
+    <textarea matInput placeholder="Текст ответа" matTextareaAutosize id="answerText" name="answerText" matAutosizeMinRows="2"
+      matAutosizeMaxRows="5" [(ngModel)]="question.answer" required #answer="ngModel">
+      </textarea>
+    <mat-error *ngIf="answer.hasError('required') && (answer.dirty || answer.touched || answerInputForm.submitted)">
+      Необходимо написать текст ответа
+    </mat-error>
+  </mat-form-field>
+  <button mat-button color="primary" [disabled]="!answerInputForm.valid">Отправить</button>
+</form>

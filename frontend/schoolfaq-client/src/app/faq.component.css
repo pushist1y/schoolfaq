@@ -3,3 +3,16 @@
     margin-top: 10px;
 }
 
+.answerText{
+    font-style: italic;
+    margin: 10px;
+}
+
+.answerArea{
+    background-color: beige;
+}
+
+.answerDate{
+    width: 100%;
+    text-align: right;
+}
