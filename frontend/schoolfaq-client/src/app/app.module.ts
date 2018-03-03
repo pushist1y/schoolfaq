@@ -30,6 +30,7 @@ import { HomeComponent } from './home.component';
 import { FaqComponent } from './faq.component';
 import { AddquestionComponent } from './addquestion.component';
 import { CategoriesService } from '../services/categories-service';
+import { QuestionsService } from '../services/questions-service';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,7 @@ import { CategoriesService } from '../services/categories-service';
     MatDialogModule,
     MatToolbarModule
   ],
-  providers: [CategoriesService],
+  providers: [CategoriesService, QuestionsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

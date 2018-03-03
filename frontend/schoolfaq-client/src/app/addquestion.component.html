@@ -1,7 +1,53 @@
-<p>
-  <mat-form-field>
-    <mat-select placeholder="Категория">
-      <mat-option value="{{cat.id}}" *ngFor="let cat of categories">{{cat.name}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-</p>
+<div style="width:800px; margin-top: 25px; margin-left:auto; margin-right: auto;">
+  <form class="formWrapper" name="questionInputForm" #questionInputForm="ngForm" (ngSubmit)="onSubmit()">
+    <table class="fullWidth" cellspacing="0">
+      <tr>
+        <td>
+          <mat-form-field class="fullWidth">
+            <input id="nameInput" name="nameInput" [(ngModel)]="question.questionerName" #questionerName="ngModel" matInput placeholder="Имя"
+              required>
+            <mat-error *ngIf="questionerName.hasError('required') && (questionerName.dirty || questionerName.touched || questionInputForm.submitted)">
+              Необходимо заполнить имя
+            </mat-error>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="fullWidth">
+            <input id="phoneInput" name="phoneInput" #phoneInput [(ngModel)]="question.questionerPhone" #questionerPhone="ngModel" matInput
+              placeholder="Телефон" required pattern="^\d+$" maxlength="10" type="tel">
+            <mat-hint align="end">{{phoneInput.value.length}} / 10</mat-hint>
+            <mat-error *ngIf="questionerPhone.hasError('required') && (questionerPhone.dirty || questionerPhone.touched || questionInputForm.submitted)">
+              Необходимо заполнить телефон
+            </mat-error>
+            <mat-error *ngIf="questionerPhone.hasError('pattern') && !questionerPhone.hasError('required')">
+              Введите правильный телефон (10 цифр)
+            </mat-error>
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+    <mat-form-field>
+      <mat-select placeholder="Категория" [(ngModel)]="question.categoryId" id="Category" name="Category" required #category="ngModel">
+        <mat-option value="{{cat.id}}" *ngFor="let cat of categories">{{cat.name}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="category.hasError('required') && (category.dirty || category.touched || questionInputForm.submitted)">
+        Необходимо выбрать категорию
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input id="subjectInput" name="subjectInput" [(ngModel)]="question.subject" #subject="ngModel" matInput placeholder="Тема"
+        required>
+      <mat-error *ngIf="subject.hasError('required') && (subject.dirty || subject.touched || questionInputForm.submitted)">
+        Необходимо указать тему
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput placeholder="Текст вопроса" matTextareaAutosize
+        id="questionText" name="questionText"
+       matAutosizeMinRows="2" matAutosizeMaxRows="15" [(ngModel)]="question.text">
+      </textarea>
+    </mat-form-field>
+    <button mat-button color="primary" [disabled]="!questionInputForm.valid">Отправить</button>
+  </form>
+
+</div>
