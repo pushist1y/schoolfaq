@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolFaq.Core.Models
@@ -15,5 +16,6 @@ namespace SchoolFaq.Core.Models
 
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }
+        public DateTime? CreatedAt { get; set; }
     }
 }

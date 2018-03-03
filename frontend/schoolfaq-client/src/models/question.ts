@@ -1,3 +1,6 @@
+import { Category } from "./category";
+import * as moment from 'moment';
+
 export class Question {
     id: number;
     subject: string;
@@ -7,4 +10,6 @@ export class Question {
     questionerPhone: string;
     likesCount: number;
     dislikesCount: number;
+    category: Category;
+    createdAt: moment.Moment;
 }

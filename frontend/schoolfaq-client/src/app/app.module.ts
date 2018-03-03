@@ -23,7 +23,8 @@ import {
   MatProgressBarModule,
   MatMenuModule,
   MatDialogModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatCardModule
 
 } from '@angular/material';
 import { HomeComponent } from './home.component';
@@ -60,8 +61,8 @@ import { QuestionsService } from '../services/questions-service';
     MatProgressBarModule,
     MatMenuModule,
     MatDialogModule,
-    MatToolbarModule
-  ],
+    MatToolbarModule,
+    MatCardModule],
   providers: [CategoriesService, QuestionsService],
   bootstrap: [AppComponent]
 })

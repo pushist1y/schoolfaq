@@ -11,9 +11,10 @@ using System;
 namespace SchoolFaq.Core.Migrations
 {
     [DbContext(typeof(FaqContext))]
-    partial class FaqContextModelSnapshot : ModelSnapshot
+    [Migration("20180303155517_ee92c9d35d8645beae1476b8844033d1")]
+    partial class ee92c9d35d8645beae1476b8844033d1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

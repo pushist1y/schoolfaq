@@ -47,7 +47,10 @@ namespace SchoolFaq.Core
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{*anything}",
+                    defaults: new { controller = "Home", action = "Index" }
+
+                    );
             });
         }
     }
