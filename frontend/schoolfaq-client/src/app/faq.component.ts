@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionsService } from '../services/questions-service';
 import { Question } from '../models/question';
+import { CategoriesService } from '../services/categories-service';
+import { Category } from '../models/category';
 
 @Component({
   selector: 'app-faq',
@@ -9,17 +11,31 @@ import { Question } from '../models/question';
 })
 export class FaqComponent implements OnInit {
 
-  constructor(private questionsService: QuestionsService) { }
+  constructor(private questionsService: QuestionsService,
+    private catService: CategoriesService) { }
 
   questions: Array<Question> = new Array<Question>();
   order: string = "date";
 
+  allCategories: Array<Category> = new Array<Category>();
+  selectedCatId: number = -1;
+
   ngOnInit() {
     this.getAllQuestions();
+    this.catService.getCategories().subscribe((cats) => {
+      this.allCategories.length = 0;
+      let catAll = new Category();
+      catAll.id = -1;
+      catAll.name = "Все";
+      this.allCategories.push(catAll);
+      for (let i = 0; i < cats.length; i++) {
+        this.allCategories.push(cats[i]);
+      }
+    });
   }
 
-  private getAllQuestions(order?: string){
-    this.questionsService.getAllQuestions(order).subscribe((questions) => {
+  private getAllQuestions(order?: string, catId?: number) {
+    this.questionsService.getAllQuestions(order, catId).subscribe((questions) => {
       this.questions.length = 0;
       for (let i = 0; i < questions.length; i++) {
         this.questions.push(questions[i]);
@@ -27,14 +43,18 @@ export class FaqComponent implements OnInit {
     });
   }
 
-  onOrderChange(event:any){
-    this.getAllQuestions(this.order);
+  onCatChange(event: any) {
+    this.getAllQuestions(this.order, this.selectedCatId);
   }
 
-  onDeleteClick(id:number){
+  onOrderChange(event: any) {
+    this.getAllQuestions(this.order, this.selectedCatId);
+  }
+
+  onDeleteClick(id: number) {
     this.questionsService.deleteQuestion(id).subscribe(() => {
       let q = this.questions.find((item) => item.id === id);
-      if(!q){
+      if (!q) {
         return;
       }
       let i = this.questions.indexOf(q);
@@ -42,27 +62,27 @@ export class FaqComponent implements OnInit {
     });
   }
 
-  onUpvoteClick(id:number){
+  onUpvoteClick(id: number) {
     this.questionsService.upvote(id).subscribe((likes) => {
       let question = this.questions.find((q) => q.id === id);
-      if(question){
+      if (question) {
         question.likesCount = likes;
       }
     });
   }
 
-  onDownvoteClick(id:number){
+  onDownvoteClick(id: number) {
     this.questionsService.downvote(id).subscribe((dislikes) => {
       let question = this.questions.find((q) => q.id === id);
-      if(question){
+      if (question) {
         question.dislikesCount = dislikes;
       }
     });
   }
 
-  onAnswerClick(id:number){
+  onAnswerClick(id: number) {
     let question = this.questions.find((q) => q.id === id);
-    if(!question){
+    if (!question) {
       return;
     }
     question.isEditing = true;

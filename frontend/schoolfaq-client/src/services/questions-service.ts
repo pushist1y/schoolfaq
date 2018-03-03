@@ -22,10 +22,16 @@ export class QuestionsService extends RemoteServiceBase {
         return this.http.post<Question>(this.apiUrl, question, this.httpOptions);
     }
 
-    getAllQuestions(order?: string): Observable<Array<Question>> {
+    getAllQuestions(order?: string, catId?: number): Observable<Array<Question>> {
         let url = this.apiUrl;
-        if(order){
-            url += "?order=" + order;
+        if (order || catId) {
+            url += "?none=1";
+            if (order) {
+                url += "&order=" + order;
+            }
+            if(catId){
+                url += "&catId=" + catId.toString();
+            }
         }
         return this.http.get<Array<Question>>(url, this.httpOptions).map((questions) => {
             for (let i = 0; i < questions.length; i++) {

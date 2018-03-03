@@ -20,11 +20,16 @@ namespace SchoolFaq.Core.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Index([FromQuery] string order)
+        public async Task<IActionResult> Index([FromQuery] string order, [FromQuery] long? catId)
         {
             var query = _context.FaqQuestions
                 .Include(q => q.Category)
                 .AsNoTracking();
+
+            if(catId.HasValue && catId.Value > 0)
+            {
+                query = query.Where(q => q.CategoryId == catId.Value);
+            }
 
             var ordered = false;
             if (!string.IsNullOrEmpty(order))

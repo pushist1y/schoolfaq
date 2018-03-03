@@ -4,13 +4,26 @@
 <div style="height:30px;width:100%">
   <div fxLayout="row">
     <div fxFlex></div>
-    <div fxFlexAlign="right" fxFlex="20"  style="text-align: right;">
+    <div fxFlexAlign="right" fxFlex="20" style="text-align: right;">
       <span style="margin-right: 10px;">Сортировка: </span>
     </div>
     <div fxFlexAlign="right" fxFlex="20">
       <mat-select placeholder="Сортировка" id="Order" name="Order" [(value)]="order" (change)="onOrderChange($event)">
         <mat-option value="date">По дате</mat-option>
         <mat-option value="rating">По рейтингу</mat-option>
+      </mat-select>
+    </div>
+  </div>
+</div>
+<div style="height:30px;width:100%">
+  <div fxLayout="row">
+    <div fxFlex></div>
+    <div fxFlexAlign="right" fxFlex="20" style="text-align: right;">
+      <span style="margin-right: 10px;">Категория: </span>
+    </div>
+    <div fxFlexAlign="right" fxFlex="20">
+      <mat-select placeholder="Категория" id="Category" name="Category" [(value)]="selectedCatId" (change)="onCatChange($event)">
+        <mat-option value="{{cat.id}}" *ngFor="let cat of allCategories">{{cat.name}}</mat-option>
       </mat-select>
     </div>
   </div>
