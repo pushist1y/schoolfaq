@@ -22,4 +22,8 @@ export class AppComponent {
   faqClick() {
     this.router.navigateByUrl("/faq");
   }
+
+  addClick() {
+    this.router.navigateByUrl("/addq");
+  }
 }

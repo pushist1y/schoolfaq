@@ -1,0 +1,7 @@
+<p>
+  <mat-form-field>
+    <mat-select placeholder="Категория">
+      <mat-option value="{{cat.id}}" *ngFor="let cat of categories">{{cat.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</p>

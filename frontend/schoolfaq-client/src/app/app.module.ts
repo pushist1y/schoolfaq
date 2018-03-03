@@ -28,12 +28,15 @@ import {
 } from '@angular/material';
 import { HomeComponent } from './home.component';
 import { FaqComponent } from './faq.component';
+import { AddquestionComponent } from './addquestion.component';
+import { CategoriesService } from '../services/categories-service';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    FaqComponent
+    FaqComponent,
+    AddquestionComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +61,7 @@ import { FaqComponent } from './faq.component';
     MatDialogModule,
     MatToolbarModule
   ],
-  providers: [],
+  providers: [CategoriesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
