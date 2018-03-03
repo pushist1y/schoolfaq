@@ -15,12 +15,12 @@
         <td>
           <mat-form-field class="fullWidth">
             <input id="phoneInput" name="phoneInput" #phoneInput [(ngModel)]="question.questionerPhone" #questionerPhone="ngModel" matInput
-              placeholder="Телефон" required pattern="^\d+$" maxlength="10" type="tel">
+              placeholder="Телефон" required pattern="^\d{10,10}$" maxlength="10" type="tel">
             <mat-hint align="end">{{phoneInput.value.length}} / 10</mat-hint>
             <mat-error *ngIf="questionerPhone.hasError('required') && (questionerPhone.dirty || questionerPhone.touched || questionInputForm.submitted)">
               Необходимо заполнить телефон
             </mat-error>
-            <mat-error *ngIf="questionerPhone.hasError('pattern') && !questionerPhone.hasError('required')">
+            <mat-error *ngIf="questionerPhone.hasError('pattern') && !questionerPhone.hasError('required') && questionInputForm.submitted">
               Введите правильный телефон (10 цифр)
             </mat-error>
           </mat-form-field>
