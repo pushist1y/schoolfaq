@@ -1,0 +1,8 @@
+.toolbarItem a{
+    cursor: pointer;
+}
+
+.toolbarItem{
+    
+    margin-right: 15px;
+}

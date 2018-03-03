@@ -10,7 +10,7 @@ namespace SchoolFaq.Core.Controllers
     {
         public IActionResult Index()
         {
-            return Ok();
+            return File("~/index.html", "text/html");
         }
     }
 }

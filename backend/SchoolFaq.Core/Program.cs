@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using SchoolFaq.Core.Services;
 
 namespace SchoolFaq.Core
 {
@@ -14,7 +16,23 @@ namespace SchoolFaq.Core
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            var host = BuildWebHost(args);
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var logger = services.GetService<ILogger<Program>>();
+                try
+                {
+                    var di = services.GetRequiredService<DataInitializer>();
+                    di.Initialize().Wait();
+                }
+                catch(Exception e)
+                {
+                    logger.LogError(e, "Error");
+                }
+            }
+
+            host.Run();
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
